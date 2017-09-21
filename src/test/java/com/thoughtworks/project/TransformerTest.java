@@ -21,6 +21,23 @@ public class TransformerTest {
     }
 
     @Test
+    public void should_sort_and_count_emails() throws Exception {
+        List<String> strings = Arrays.asList("ynpan", "yzqi", "ybowang", "qiqzhao", "yibtan", "abc", "sjyuan");
+        Map<String, Integer> expected = new LinkedHashMap<>();
+        expected.put("abc", 3);
+        expected.put("qiqzhao", 7);
+        expected.put("sjyuan", 6);
+        expected.put("ybowang", 7);
+        expected.put("yibtan", 6);
+        expected.put("ynpan", 5);
+        expected.put("yzqi", 4);
+
+        Map<String, Integer> actualResult = new Transformer().sortAndCount(strings);
+        assertThat(actualResult.keySet(),contains("abc","qiqzhao","sjyuan","ybowang","yibtan","ynpan","yzqi"));
+        assertThat(actualResult.values(),contains(3,7,6,7,6,5,4));
+    }
+
+    @Test
     public void should_return_sorted_letters() throws Exception {
         String letters = "aababbbcabcdabcde";
         String expected = "a(5) > b(6) > c(3) > d(2) > e(1)";

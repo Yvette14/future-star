@@ -9,6 +9,13 @@ public class Transformer {
         return integers.stream().filter(n -> n % 2 == 0).reduce(0, (a, b) -> a + b);
     }
 
+    public Map<String, Integer> sortAndCount(List<String> strings) {
+        Collections.sort(strings);
+        Map<String, Integer> result = new LinkedHashMap<>();
+        strings.forEach(item-> result.put(item,item.length()));
+        return result;
+    }
+
     public String sortLetters(String letters) {
         List<String> strings = Arrays.asList(letters.split(""));
         Map<String, Integer> result = new HashMap<>();
