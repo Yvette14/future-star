@@ -4,31 +4,30 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class Transformer {
-    public int sumEvens(List<Integer> integers) {
-        return integers.stream().filter(n -> n % 2 == 0).reduce(0, (a, b) -> a + b);
-    }
+class Transformer {
 
-    public Map<String, Integer> sortAndCount(List<String> strings) {
-        Collections.sort(strings);
+    static Map<String, Integer> sortAndCount(List<String> emailNames) {
+        Collections.sort(emailNames);
         Map<String, Integer> result = new LinkedHashMap<>();
-        strings.forEach(item-> result.put(item,item.length()));
+        emailNames.forEach(item -> result.put(item, item.length()));
+
         return result;
     }
 
-    public String sortLetters(String letters) {
-        List<String> strings = Arrays.asList(letters.split(""));
+    static String sortLetters(String letters) {
         Map<String, Integer> result = new HashMap<>();
-        strings.forEach(item->{
-            if(result.get(item) != null){
-                result.put(item, result.get(item) + 1);
-            }else {
-                result.put(item, 1);
-            }
-        });
+        Arrays.asList(letters.split(""))
+                .forEach(item -> result.put(item, result.containsKey(item) ? result.get(item) + 1 : 1));
 
-        Stream<Map.Entry<String, Integer>> sorted = result.entrySet().stream().sorted(Map.Entry.comparingByKey());
+        Stream<Map.Entry<String, Integer>> sortedLetters = result.entrySet()
+                .stream()
+                .sorted(Collections.reverseOrder(Map.Entry.comparingByKey()));
 
-        return sorted.map(item->item.getKey()+"("+item.getValue()+")").collect(Collectors.joining(" > "));
+        return formatAsString(sortedLetters);
+    }
+
+    private static String formatAsString(Stream<Map.Entry<String, Integer>> sorted) {
+        return sorted.map(item -> item.getValue() + "(" + item.getKey() + ")")
+                .collect(Collectors.joining(" < "));
     }
 }
