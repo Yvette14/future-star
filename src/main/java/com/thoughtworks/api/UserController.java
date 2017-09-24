@@ -14,7 +14,7 @@ public class UserController {
 
     @PostMapping
     public String createUser(@RequestBody User user) {
-        if(userCache.createUser(user)){
+        if (userCache.createUser(user)) {
             return "create user successfully!";
         }
         return "create user failed!";
@@ -23,5 +23,13 @@ public class UserController {
     @GetMapping
     public List<User> getUsers() {
         return userCache.getUsers();
+    }
+
+    @PutMapping("/{username}")
+    public String updateUserAge(@PathVariable String username, @RequestBody User user) {
+        if (userCache.updateUserAge(username, user)) {
+            return "update age successfully!";
+        }
+        return "update age failed!";
     }
 }

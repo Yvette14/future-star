@@ -10,8 +10,8 @@ public class Cache {
     public static final Map<String, User> users = new HashMap<>();
 
     static {
-        User user1 = new User("future_star", "123456");
-        User user2 = new User("Yibing", "123456");
+        User user1 = new User("future_star", "123456",22);
+        User user2 = new User("Yibing", "123456",23);
 
         users.put("future_star", user1);
         users.put("Yibing", user2);
@@ -38,5 +38,13 @@ public class Cache {
             userList.add(entry.getValue());
         }
         return userList;
+    }
+
+    public boolean updateUserAge(String username, User user) {
+        if (users.get(username).getUsername().equals(user.getUsername())) {
+            users.put(username, user);
+            return true;
+        }
+        return false;
     }
 }
