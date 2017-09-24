@@ -25,6 +25,7 @@ public class UserController {
     }
 
     @GetMapping
+    @ResponseStatus(HttpStatus.OK)
     public List<User> getUsers() {
         return userService.getUsers();
     }
