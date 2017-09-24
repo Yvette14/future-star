@@ -19,7 +19,7 @@ public class UserControllerTest extends BaseControllerTest {
     UserService userService;
 
     @Test
-    void should_create_user() throws Exception{
+    void should_create_user() throws Exception {
         User user = User.builder().username("future_star").password("123456").age(22).build();
 
         mockMvc.perform(post("/api/users")
@@ -32,7 +32,7 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
-    void should_create_user_failed() throws Exception{
+    void should_create_user_failed() throws Exception {
         User user = User.builder().username("").password("123456").age(22).build();
 
         mockMvc.perform(post("/api/users")
@@ -51,7 +51,7 @@ public class UserControllerTest extends BaseControllerTest {
         mockMvc.perform(get("/api/users")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$",hasSize(1)))
+                .andExpect(jsonPath("$", hasSize(1)))
                 .andExpect(jsonPath("$[0].username").value("future_star"))
                 .andExpect(jsonPath("$[0].password").value("123456"))
                 .andExpect(jsonPath("$[0].age").value(22));

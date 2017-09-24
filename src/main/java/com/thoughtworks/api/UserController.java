@@ -18,10 +18,10 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<?> createUser(@RequestBody User user) {
-        if(userService.createUser(user)){
+        if (userService.createUser(user)) {
             return new ResponseEntity<User>(user, HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("create user failed!",HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("create user failed!", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping
@@ -35,7 +35,7 @@ public class UserController {
         if (userService.updateUserAge(username, user)) {
             return new ResponseEntity<User>(user, HttpStatus.OK);
         }
-        return new ResponseEntity<>("update age failed!",HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("update age failed!", HttpStatus.FORBIDDEN);
     }
 
     @GetMapping(params = "age")

@@ -1,6 +1,5 @@
 package com.thoughtworks.api;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.dto.Cache;
 import com.thoughtworks.dto.LoginBody;
@@ -15,7 +14,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class LoginControllerTest extends BaseControllerTest{
+public class LoginControllerTest extends BaseControllerTest {
 
     @Autowired
     UserService userService;

@@ -22,6 +22,6 @@ public class LoginController {
         if (loginService.login(user)) {
             return new ResponseEntity<>("login successfully!", HttpStatus.OK);
         }
-        return new ResponseEntity<>("login failed!",HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("login failed!", HttpStatus.FORBIDDEN);
     }
 }
