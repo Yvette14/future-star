@@ -1,11 +1,16 @@
 package com.thoughtworks.dto;
 
+import com.thoughtworks.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 public class Cache {
+
+    UserService userService = new UserService();
 
     public static final Map<String, User> users = new HashMap<>();
 
@@ -18,11 +23,7 @@ public class Cache {
     }
 
     public boolean createUser(User user) {
-        if (user.getUsername().isEmpty() || user.getPassword().isEmpty()) {
-            return false;
-        }
-        users.put(user.getUsername(), user);
-        return true;
+        return userService.createUser(users, user);
     }
 
     public boolean login(User user) {
