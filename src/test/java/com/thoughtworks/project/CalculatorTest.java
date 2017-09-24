@@ -1,7 +1,6 @@
 package com.thoughtworks.project;
 
-
-import org.junit.gen5.api.Test;
+import org.junit.jupiter.api.Test;
 
 import java.util.Arrays;
 import java.util.List;
