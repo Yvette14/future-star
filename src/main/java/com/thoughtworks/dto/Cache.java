@@ -1,6 +1,8 @@
 package com.thoughtworks.dto;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Cache {
@@ -28,5 +30,13 @@ public class Cache {
             return true;
         }
         return false;
+    }
+
+    public List<User> getUsers() {
+        List<User> userList = new ArrayList<>();
+        for (Map.Entry<String, User> entry : users.entrySet()) {
+            userList.add(entry.getValue());
+        }
+        return userList;
     }
 }

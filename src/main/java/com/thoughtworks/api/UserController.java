@@ -2,10 +2,9 @@ package com.thoughtworks.api;
 
 import com.thoughtworks.dto.Cache;
 import com.thoughtworks.dto.User;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @RestController
 @RequestMapping("/api/users")
@@ -19,5 +18,10 @@ public class UserController {
             return "create user successfully!";
         }
         return "create user failed!";
+    }
+
+    @GetMapping
+    public List<User> getUsers() {
+        return userCache.getUsers();
     }
 }
