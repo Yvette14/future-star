@@ -1,7 +1,8 @@
 package com.thoughtworks.api;
 
-import com.thoughtworks.dto.Cache;
 import com.thoughtworks.dto.User;
+import com.thoughtworks.service.UserService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,11 +11,12 @@ import java.util.List;
 @RequestMapping("/api/users")
 public class UserController {
 
-    Cache userCache = new Cache();
+    @Autowired
+    private UserService userService;
 
     @PostMapping
     public String createUser(@RequestBody User user) {
-        if (userCache.createUser(user)) {
+        if (userService.createUser(user)) {
             return "create user successfully!";
         }
         return "create user failed!";
@@ -22,12 +24,12 @@ public class UserController {
 
     @GetMapping
     public List<User> getUsers() {
-        return userCache.getUsers();
+        return userService.getUsers();
     }
 
     @PutMapping("/{username}")
     public String updateUserAge(@PathVariable String username, @RequestBody User user) {
-        if (userCache.updateUserAge(username, user)) {
+        if (userService.updateUserAge(username, user)) {
             return "update age successfully!";
         }
         return "update age failed!";
@@ -35,6 +37,6 @@ public class UserController {
 
     @GetMapping(params = "age")
     public List<User> findByAge(@RequestParam int age) {
-        return userCache.getUsersByAge(age);
+        return userService.getUsersByAge(age);
     }
 }
