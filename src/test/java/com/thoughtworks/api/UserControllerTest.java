@@ -56,5 +56,26 @@ public class UserControllerTest extends BaseControllerTest {
                 .andExpect(jsonPath("$[0].age").value(22));
     }
 
-    
+    @Test
+    void should_update_user_age_by_username() throws Exception {
+        User user = User.builder().username("future_star").password("123456").age(21).build();
+
+        mockMvc.perform(put("/api/users/" + user.getUsername())
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(user)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$.username").value("future_star"))
+                .andExpect(jsonPath("$.password").value("123456"))
+                .andExpect(jsonPath("$.age").value(21));
+    }
+
+    @Test
+    void should_failed_update_user_age_by_username() throws Exception {
+        User user = User.builder().username("Yibing").password("123456").age(21).build();
+
+        mockMvc.perform(put("/api/users/future_star")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(user)))
+                .andExpect(status().isForbidden());
+    }
 }

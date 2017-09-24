@@ -31,11 +31,11 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
-    public String updateUserAge(@PathVariable String username, @RequestBody User user) {
+    public ResponseEntity<?> updateUserAge(@PathVariable String username, @RequestBody User user) {
         if (userService.updateUserAge(username, user)) {
-            return "update age successfully!";
+            return new ResponseEntity<User>(user, HttpStatus.OK);
         }
-        return "update age failed!";
+        return new ResponseEntity<>("update age failed!",HttpStatus.FORBIDDEN);
     }
 
     @GetMapping(params = "age")
