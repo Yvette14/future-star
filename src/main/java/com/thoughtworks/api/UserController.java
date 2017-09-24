@@ -33,11 +33,11 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
-    public ResponseEntity<?> updateUserAge(@PathVariable String username, @RequestBody User user) {
+    public User updateUserAge(@PathVariable String username, @RequestBody User user) {
         if (userService.updateUserAge(username, user)) {
-            return new ResponseEntity<User>(user, HttpStatus.OK);
+            return user;
         }
-        return new ResponseEntity<>("update age failed!", HttpStatus.FORBIDDEN);
+        throw new IllegalArgumentException("update age failed!");
     }
 
     @GetMapping(params = "age")
