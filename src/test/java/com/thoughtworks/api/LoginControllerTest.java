@@ -6,6 +6,7 @@ import com.thoughtworks.dto.LoginBody;
 import com.thoughtworks.dto.User;
 import com.thoughtworks.service.LoginService;
 import com.thoughtworks.service.UserService;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -22,11 +23,15 @@ public class LoginControllerTest extends BaseControllerTest {
     @Autowired
     LoginService loginService;
 
-    @Test
-    void should_login_successfully() throws Exception {
+    @BeforeEach
+    void setUp() {
         Cache.users.clear();
         User user = User.builder().username("future_star").password("123456").age(22).build();
         userService.createUser(user);
+    }
+
+    @Test
+    void should_login_successfully() throws Exception {
         LoginBody loginBody = LoginBody.builder().username("future_star").password("123456").build();
 
         mockMvc.perform(post("/api/login")
@@ -38,9 +43,6 @@ public class LoginControllerTest extends BaseControllerTest {
 
     @Test
     void should_login_failed() throws Exception {
-        Cache.users.clear();
-        User user = User.builder().username("future_star").password("123456").age(22).build();
-        userService.createUser(user);
         LoginBody loginBody = LoginBody.builder().username("future_star").password("12346").build();
 
         mockMvc.perform(post("/api/login")
