@@ -11,7 +11,7 @@ import static org.junit.Assert.assertThat;
 public class CalculatorTest {
 
     @Test
-    public void should_return_sum_of_evens() throws Exception {
+    void should_return_sum_of_evens() throws Exception {
         List<Integer> numbers = Arrays.asList(1, 2, 3, 4, 5, 6, 7, 8, 9, 10);
 
         int sumOfEvens = Calculator.sumEvens(numbers);

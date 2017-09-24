@@ -3,6 +3,8 @@ package com.thoughtworks.api;
 import com.thoughtworks.dto.User;
 import com.thoughtworks.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -15,11 +17,11 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public String createUser(@RequestBody User user) {
-        if (userService.createUser(user)) {
-            return "create user successfully!";
+    public ResponseEntity<?> createUser(@RequestBody User user) {
+        if(userService.createUser(user)){
+            return new ResponseEntity<User>(user, HttpStatus.CREATED);
         }
-        return "create user failed!";
+        return new ResponseEntity<>("create user failed!",HttpStatus.FORBIDDEN);
     }
 
     @GetMapping
