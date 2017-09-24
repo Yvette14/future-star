@@ -4,9 +4,9 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class Sorter {
+public class Sorter {
 
-    static Map<String, Integer> sortAndCount(List<String> emailNames) {
+    public static Map<String, Integer> sortAndCount(List<String> emailNames) {
         Collections.sort(emailNames);
         Map<String, Integer> result = new LinkedHashMap<>();
         emailNames.forEach(item -> result.put(item, item.length()));
@@ -14,7 +14,7 @@ class Sorter {
         return result;
     }
 
-    static String sortLetters(String letters) {
+    public static String sortLetters(String letters) {
         Map<String, Integer> result = new HashMap<>();
         Arrays.asList(letters.split(""))
                 .forEach(item -> result.put(item, result.containsKey(item) ? result.get(item) + 1 : 1));
