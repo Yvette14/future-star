@@ -1,6 +1,7 @@
 package com.thoughtworks.api;
 
 import com.thoughtworks.dto.User;
+import com.thoughtworks.exception.IllegalArgumentException;
 import com.thoughtworks.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,11 +18,12 @@ public class UserController {
     private UserService userService;
 
     @PostMapping
-    public ResponseEntity<?> createUser(@RequestBody User user) {
+    @ResponseStatus(HttpStatus.CREATED)
+    public User createUser(@RequestBody User user) {
         if (userService.createUser(user)) {
-            return new ResponseEntity<User>(user, HttpStatus.CREATED);
+            return user;
         }
-        return new ResponseEntity<>("create user failed!", HttpStatus.FORBIDDEN);
+        throw new IllegalArgumentException("create user failed!");
     }
 
     @GetMapping

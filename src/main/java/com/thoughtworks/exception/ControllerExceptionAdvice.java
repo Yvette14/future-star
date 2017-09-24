@@ -6,18 +6,21 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-import java.sql.SQLException;
-
 @Slf4j
 @RestControllerAdvice
 public class ControllerExceptionAdvice {
 
     @ResponseStatus(HttpStatus.UNAUTHORIZED)
-    @ExceptionHandler({SQLException.class, InvalidCredentialException.class})
+    @ExceptionHandler(value = InvalidCredentialException.class)
     public String handleSQLException(InvalidCredentialException exception) {
         return exception.getMessage();
     }
 
+    @ResponseStatus(HttpStatus.FORBIDDEN)
+    @ExceptionHandler(value = IllegalArgumentException.class)
+    public String handleIllegalArgumentException(IllegalArgumentException exception) {
+        return exception.getMessage();
+    }
 
 
 }
