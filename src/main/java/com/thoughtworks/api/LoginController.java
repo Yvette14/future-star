@@ -20,8 +20,8 @@ public class LoginController {
     @PostMapping
     public ResponseEntity<?> login(@RequestBody User user) {
         if (loginService.login(user)) {
-            return new ResponseEntity<>("login successfully!", HttpStatus.OK);
+            return new ResponseEntity<>("login successfully!", HttpStatus.CREATED);
         }
-        return new ResponseEntity<>("login failed!", HttpStatus.FORBIDDEN);
+        return new ResponseEntity<>("login failed!", HttpStatus.UNAUTHORIZED);
     }
 }

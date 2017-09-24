@@ -37,7 +37,7 @@ public class LoginControllerTest extends BaseControllerTest {
         mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(loginBody)))
-                .andExpect(status().isOk())
+                .andExpect(status().isCreated())
                 .andExpect(jsonPath("$").value("login successfully!"));
     }
 
@@ -48,7 +48,7 @@ public class LoginControllerTest extends BaseControllerTest {
         mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(loginBody)))
-                .andExpect(status().isForbidden())
+                .andExpect(status().isUnauthorized())
                 .andExpect(jsonPath("$").value("login failed!"));
     }
 }
