@@ -47,4 +47,14 @@ public class Cache {
         }
         return false;
     }
+
+    public List<User> getUsersByAge(int age) {
+        List<User> userList = new ArrayList<>();
+        for (Map.Entry<String, User> entry : users.entrySet()) {
+            if (entry.getValue().getAge() == age) {
+                userList.add(entry.getValue());
+            }
+        }
+        return userList;
+    }
 }

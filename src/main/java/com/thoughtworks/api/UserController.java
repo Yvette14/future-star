@@ -32,4 +32,9 @@ public class UserController {
         }
         return "update age failed!";
     }
+
+    @GetMapping(params = "age")
+    public List<User> findByAge(@RequestParam int age) {
+        return userCache.getUsersByAge(age);
+    }
 }
