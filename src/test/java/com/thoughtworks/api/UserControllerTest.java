@@ -38,7 +38,8 @@ public class UserControllerTest extends BaseControllerTest {
         mockMvc.perform(post("/api/users")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(user)))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").value("create user failed!"));
     }
 
     @Test
@@ -76,7 +77,8 @@ public class UserControllerTest extends BaseControllerTest {
         mockMvc.perform(put("/api/users/future_star")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(user)))
-                .andExpect(status().isForbidden());
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").value("update age failed!"));
     }
 
     @Test

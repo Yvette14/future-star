@@ -1,0 +1,53 @@
+package com.thoughtworks.api;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thoughtworks.dto.Cache;
+import com.thoughtworks.dto.LoginBody;
+import com.thoughtworks.dto.User;
+import com.thoughtworks.service.LoginService;
+import com.thoughtworks.service.UserService;
+import org.junit.jupiter.api.Test;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.MediaType;
+
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+
+public class LoginControllerTest extends BaseControllerTest{
+
+    @Autowired
+    UserService userService;
+
+    @Autowired
+    LoginService loginService;
+
+    @Test
+    void should_login_successfully() throws Exception {
+        Cache.users.clear();
+        User user = User.builder().username("future_star").password("123456").age(22).build();
+        userService.createUser(user);
+        LoginBody loginBody = LoginBody.builder().username("future_star").password("123456").build();
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(loginBody)))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$").value("login successfully!"));
+    }
+
+    @Test
+    void should_login_failed() throws Exception {
+        Cache.users.clear();
+        User user = User.builder().username("future_star").password("123456").age(22).build();
+        userService.createUser(user);
+        LoginBody loginBody = LoginBody.builder().username("future_star").password("12346").build();
+
+        mockMvc.perform(post("/api/login")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(new ObjectMapper().writeValueAsString(loginBody)))
+                .andExpect(status().isForbidden())
+                .andExpect(jsonPath("$").value("login failed!"));
+    }
+}

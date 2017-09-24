@@ -3,6 +3,8 @@ package com.thoughtworks.api;
 import com.thoughtworks.dto.User;
 import com.thoughtworks.service.LoginService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -16,10 +18,10 @@ public class LoginController {
     LoginService loginService;
 
     @PostMapping
-    public String login(@RequestBody User user) {
+    public ResponseEntity<?> login(@RequestBody User user) {
         if (loginService.login(user)) {
-            return "login successfully!";
+            return new ResponseEntity<>("login successfully!", HttpStatus.OK);
         }
-        return "login failed!";
+        return new ResponseEntity<>("login failed!",HttpStatus.FORBIDDEN);
     }
 }
