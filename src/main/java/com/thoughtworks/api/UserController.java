@@ -8,15 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api/login")
-public class LoginController {
+@RequestMapping("/api/users")
+public class UserController {
 
-    Cache loginCache = new Cache();
+    Cache userCache = new Cache();
+
     @PostMapping
-    public String login(@RequestBody User user) {
-        if (loginCache.login(user)) {
-            return "login successfully!";
+    public String createUser(@RequestBody User user) {
+        if(userCache.createUser(user)){
+            return "create user successfully!";
         }
-        return "login failed!";
+        return "create user failed!";
     }
 }
