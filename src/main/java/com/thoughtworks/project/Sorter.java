@@ -4,7 +4,7 @@ import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-class Transformer {
+class Sorter {
 
     static Map<String, Integer> sortAndCount(List<String> emailNames) {
         Collections.sort(emailNames);
