@@ -39,6 +39,7 @@ public class UserController {
     }
 
     @GetMapping(params = "age")
+    @ResponseStatus(HttpStatus.OK)
     public List<User> findByAge(@RequestParam int age) {
         return userService.getUsersByAge(age);
     }

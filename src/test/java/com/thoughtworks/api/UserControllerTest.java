@@ -78,4 +78,26 @@ public class UserControllerTest extends BaseControllerTest {
                 .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isForbidden());
     }
+
+    @Test
+    void should_get_users_by_age_field() throws Exception {
+        Cache.users.clear();
+
+        User user1 = User.builder().username("future_star").password("123456").age(22).build();
+        User user2 = User.builder().username("Yibing").password("123456").age(22).build();
+        User user3 = User.builder().username("yibing").password("123456").age(21).build();
+
+        userService.createUser(user1);
+        userService.createUser(user2);
+        userService.createUser(user3);
+
+        mockMvc.perform(get("/api/users")
+                .param("age", "22")
+                .contentType(MediaType.APPLICATION_JSON))
+                .andExpect(status().isOk())
+                .andExpect(jsonPath("$", hasSize(2)))
+                .andExpect(jsonPath("$[0].username").value("future_star"))
+                .andExpect(jsonPath("$[1].username").value("Yibing"));
+
+    }
 }
