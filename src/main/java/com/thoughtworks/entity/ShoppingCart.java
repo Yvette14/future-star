@@ -17,8 +17,8 @@ public class ShoppingCart {
     @Id
     private String id;
 
-    @OneToOne(targetEntity = User.class)
-    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
+    @JoinColumn(name = "userId", referencedColumnName = "id")
     private User userId;
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)

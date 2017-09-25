@@ -23,11 +23,6 @@ public class UserControllerTest extends BaseControllerTest {
     @Autowired
     UserRepository userRepository;
 
-    @BeforeEach
-    void setUp() {
-        userRepository.deleteAll();
-    }
-
     @Test
     void should_create_user() throws Exception {
         User user = User.builder().username("future_star").password("123456").age(22).build();

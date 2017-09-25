@@ -20,7 +20,7 @@ public class AddressServiceImpl implements AddressService {
     @Override
     public Address createAddress(String username, Address address) {
         User user = userRepository.findUserByUsername(username);
-        address.setUser_id(user);
+        address.setUserId(user);
         addressRepository.save(address);
         return null;
     }
