@@ -1,6 +1,6 @@
 package com.thoughtworks.service;
 
-import com.thoughtworks.dto.User;
+import com.thoughtworks.entity.User;
 
 import java.util.List;
 

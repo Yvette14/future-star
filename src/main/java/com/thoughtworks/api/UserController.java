@@ -1,6 +1,6 @@
 package com.thoughtworks.api;
 
-import com.thoughtworks.dto.User;
+import com.thoughtworks.entity.User;
 import com.thoughtworks.exception.IllegalArgumentException;
 import com.thoughtworks.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;

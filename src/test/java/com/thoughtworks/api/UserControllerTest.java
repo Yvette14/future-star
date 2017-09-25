@@ -1,10 +1,10 @@
 package com.thoughtworks.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thoughtworks.dto.Cache;
-import com.thoughtworks.dto.User;
+import com.thoughtworks.entity.User;
+import com.thoughtworks.repository.UserRepository;
 import com.thoughtworks.service.UserService;
-import org.junit.jupiter.api.BeforeEach;
+import com.thoughtworks.util.StringUtils;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -19,10 +19,8 @@ public class UserControllerTest extends BaseControllerTest {
     @Autowired
     UserService userService;
 
-    @BeforeEach
-    void setUp() {
-        Cache.users.clear();
-    }
+    @Autowired
+    UserRepository userRepository;
 
     @Test
     void should_create_user() throws Exception {
@@ -50,8 +48,9 @@ public class UserControllerTest extends BaseControllerTest {
 
     @Test
     void should_get_user_list() throws Exception {
-        User user = User.builder().username("future_star").password("123456").age(22).build();
-        userService.createUser(user);
+        User user = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(22).build();
+
+        userRepository.save(user);
 
         mockMvc.perform(get("/api/users")
                 .contentType(MediaType.APPLICATION_JSON))
@@ -64,8 +63,9 @@ public class UserControllerTest extends BaseControllerTest {
 
     @Test
     void should_update_user_age_by_username() throws Exception {
-        User user = User.builder().username("future_star").password("123456").age(21).build();
-        userService.createUser(user);
+        User user = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(21).build();
+
+        userRepository.save(user);
 
         mockMvc.perform(put("/api/users/" + user.getUsername())
                 .contentType(MediaType.APPLICATION_JSON)
@@ -78,11 +78,11 @@ public class UserControllerTest extends BaseControllerTest {
 
     @Test
     void should_failed_update_user_age_by_username() throws Exception {
-        User user1 = User.builder().username("Yibing").password("123456").age(21).build();
-        User user2 = User.builder().username("future_star").password("123456").age(21).build();
-        userService.createUser(user1);
-        userService.createUser(user2);
+        User user1 = User.builder().id(StringUtils.randomUUID()).username("Yibing").password("123456").age(21).build();
+        User user2 = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(21).build();
 
+        userRepository.save(user1);
+        userRepository.save(user2);
         mockMvc.perform(put("/api/users/future_star")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(user1)))
@@ -93,21 +93,19 @@ public class UserControllerTest extends BaseControllerTest {
     @Test
     void should_get_users_by_age_field() throws Exception {
 
-        User user1 = User.builder().username("future_star").password("123456").age(22).build();
-        User user2 = User.builder().username("Yibing").password("123456").age(22).build();
-        User user3 = User.builder().username("yibing").password("123456").age(21).build();
+        User user1 = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(22).build();
+        User user2 = User.builder().id(StringUtils.randomUUID()).username("Yibing").password("123456").age(22).build();
+        User user3 = User.builder().id(StringUtils.randomUUID()).username("yibing").password("123456").age(21).build();
 
-        userService.createUser(user1);
-        userService.createUser(user2);
-        userService.createUser(user3);
+        userRepository.save(user1);
+        userRepository.save(user2);
+        userRepository.save(user3);
 
         mockMvc.perform(get("/api/users")
                 .param("age", "22")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$", hasSize(2)))
-                .andExpect(jsonPath("$[0].username").value("future_star"))
-                .andExpect(jsonPath("$[1].username").value("Yibing"));
+                .andExpect(jsonPath("$", hasSize(2)));
 
     }
 }

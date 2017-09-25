@@ -9,8 +9,11 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import org.springframework.web.context.WebApplicationContext;
 
+import javax.transaction.Transactional;
+
 @ExtendWith(SpringExtension.class)
 @SpringBootTest
+@Transactional
 public class BaseControllerTest {
 
     @Autowired

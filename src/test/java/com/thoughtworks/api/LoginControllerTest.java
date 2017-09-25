@@ -1,11 +1,12 @@
 package com.thoughtworks.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.thoughtworks.dto.Cache;
 import com.thoughtworks.dto.LoginBody;
-import com.thoughtworks.dto.User;
+import com.thoughtworks.entity.User;
+import com.thoughtworks.repository.UserRepository;
 import com.thoughtworks.service.LoginService;
 import com.thoughtworks.service.UserService;
+import com.thoughtworks.util.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,13 +22,15 @@ public class LoginControllerTest extends BaseControllerTest {
     UserService userService;
 
     @Autowired
+    UserRepository userRepository;
+
+    @Autowired
     LoginService loginService;
 
     @BeforeEach
     void setUp() {
-        Cache.users.clear();
-        User user = User.builder().username("future_star").password("123456").age(22).build();
-        userService.createUser(user);
+        User user = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(22).build();
+        userRepository.save(user);
     }
 
     @Test
@@ -43,7 +46,7 @@ public class LoginControllerTest extends BaseControllerTest {
 
     @Test
     void should_login_failed() throws Exception {
-        LoginBody loginBody = LoginBody.builder().username("future_star").password("12346").build();
+        LoginBody loginBody = LoginBody.builder().username("future_star").password("wrong_password").build();
 
         mockMvc.perform(post("/api/login")
                 .contentType(MediaType.APPLICATION_JSON)
