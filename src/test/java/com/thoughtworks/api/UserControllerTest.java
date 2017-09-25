@@ -20,7 +20,7 @@ public class UserControllerTest extends BaseControllerTest {
     UserService userService;
 
     @BeforeEach
-    void setUp(){
+    void setUp() {
         Cache.users.clear();
     }
 
