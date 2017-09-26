@@ -1,5 +1,6 @@
 package com.thoughtworks.service.impl;
 
+import com.thoughtworks.cache.SessionCache;
 import com.thoughtworks.entity.Item;
 import com.thoughtworks.entity.ShoppingCart;
 import com.thoughtworks.entity.User;
@@ -24,12 +25,15 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     ItemRepository itemRepository;
 
     @Autowired
+    SessionCache sessionCache;
+
+    @Autowired
     ShoppingCartRepository shoppingCartRepository;
 
     @Override
-    public String addItem(String username, Item item) {
+    public String addItem(Item item) {
         ShoppingCart shoppingCart;
-        User user = userRepository.findUserByUsername(username);
+        User user = sessionCache.loadCurrentUser();
         if (shoppingCartRepository.findShoppingCartByUser(user) != null) {
             shoppingCart = shoppingCartRepository.findShoppingCartByUser(user);
             shoppingCart.getItems().add(item);

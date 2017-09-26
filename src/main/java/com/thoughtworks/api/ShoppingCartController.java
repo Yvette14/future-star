@@ -7,15 +7,15 @@ import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
-@RequestMapping("/api/shopping-cart")
+@RequestMapping("/api/shopping-carts")
 public class ShoppingCartController {
 
     @Autowired
     ShoppingCartService shoppingCartService;
 
-    @PostMapping(value = "/{username}")
+    @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String addItem(@PathVariable String username, @RequestBody Item item) {
-        return shoppingCartService.addItem(username, item);
+    public String addItem(@RequestBody Item item) {
+        return shoppingCartService.addItem(item);
     }
 }

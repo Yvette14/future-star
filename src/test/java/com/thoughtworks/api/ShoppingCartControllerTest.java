@@ -1,6 +1,7 @@
 package com.thoughtworks.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thoughtworks.cache.SessionCache;
 import com.thoughtworks.entity.Item;
 import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.ItemRepository;
@@ -22,8 +23,12 @@ public class ShoppingCartControllerTest extends BaseControllerTest {
     @Autowired
     ItemRepository itemRepository;
 
+    @Autowired
+    SessionCache sessionCache;
+
     @BeforeEach
     void setUp() {
+        sessionCache.setCurrentUser(null);
         User user = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(22).build();
         userRepository.save(user);
     }
@@ -33,7 +38,7 @@ public class ShoppingCartControllerTest extends BaseControllerTest {
         Item item = Item.builder().id(StringUtils.randomUUID()).itemName("tissue").price(3.0).build();
         itemRepository.save(item);
 
-        mockMvc.perform(post("/api/shopping-cart/future_star")
+        mockMvc.perform(post("/api/shopping-carts")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(item)))
                 .andExpect(status().isCreated());
