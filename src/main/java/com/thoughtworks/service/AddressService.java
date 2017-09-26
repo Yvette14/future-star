@@ -4,5 +4,5 @@ import com.thoughtworks.entity.Address;
 
 public interface AddressService {
 
-    Address createAddress(String username, Address address);
+    Address createAddress(Address address);
 }

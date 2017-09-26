@@ -5,6 +5,7 @@ import com.thoughtworks.entity.Address;
 import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.AddressRepository;
 import com.thoughtworks.repository.UserRepository;
+import com.thoughtworks.service.UserService;
 import com.thoughtworks.util.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,7 +26,6 @@ public class AddressControllerTest extends BaseControllerTest{
     @Autowired
     AddressRepository addressRepository;
 
-
     @BeforeEach
     void setUp() {
         User user = User.builder().addresses(Collections.emptyList()).id(StringUtils.randomUUID()).username("new_user").password("123456").age(22).build();
@@ -36,7 +36,7 @@ public class AddressControllerTest extends BaseControllerTest{
     void should_create_an_address() throws Exception {
         Address address = Address.builder().id(StringUtils.randomUUID()).description("street1").build();
 
-        mockMvc.perform(post("/api/addresses/new_user")
+        mockMvc.perform(post("/api/addresses")
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(address)))
                 .andExpect(status().isCreated())

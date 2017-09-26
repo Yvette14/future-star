@@ -13,10 +13,10 @@ public class AddressController {
     @Autowired
     AddressService addressService;
 
-    @PostMapping(value = "/{username}")
+    @PostMapping()
     @ResponseStatus(HttpStatus.CREATED)
-    public Address createAddress(@PathVariable String username, @RequestBody Address address) {
-        addressService.createAddress(username, address);
+    public Address createAddress(@RequestBody Address address) {
+        addressService.createAddress(address);
         return address;
     }
 }

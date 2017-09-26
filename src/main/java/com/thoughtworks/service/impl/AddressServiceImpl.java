@@ -1,5 +1,6 @@
 package com.thoughtworks.service.impl;
 
+import com.thoughtworks.cache.SessionCache;
 import com.thoughtworks.entity.Address;
 import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.AddressRepository;
@@ -20,9 +21,12 @@ public class AddressServiceImpl implements AddressService {
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    SessionCache sessionCache;
+
     @Override
-    public Address createAddress(String username, Address address) {
-        User user = userRepository.findUserByUsername(username);
+    public Address createAddress(Address address) {
+        User user = sessionCache.loadCurrentUser();
         address.setId(StringUtils.randomUUID());
         addressRepository.save(address);
         user.getAddresses().add(address);
