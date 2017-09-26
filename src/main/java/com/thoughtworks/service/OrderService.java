@@ -1,9 +1,10 @@
 package com.thoughtworks.service;
 
 import com.thoughtworks.entity.Item;
+import com.thoughtworks.entity.Order;
 
 import java.util.List;
 
 public interface OrderService {
-    String createOrder(List<Item> items);
+    Order createOrder(List<Item> items);
 }

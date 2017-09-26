@@ -3,8 +3,10 @@ package com.thoughtworks.service.impl;
 import com.thoughtworks.cache.SessionCache;
 import com.thoughtworks.entity.Item;
 import com.thoughtworks.entity.Order;
+import com.thoughtworks.entity.ShoppingCart;
 import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.OrderRepository;
+import com.thoughtworks.repository.ShoppingCartRepository;
 import com.thoughtworks.repository.UserRepository;
 import com.thoughtworks.service.OrderService;
 import com.thoughtworks.util.StringUtils;
@@ -23,19 +25,30 @@ public class OrderServiceImpl implements OrderService {
     UserRepository userRepository;
 
     @Autowired
+    ShoppingCartRepository shoppingCartRepository;
+
+    @Autowired
     SessionCache sessionCache;
 
     @Override
-    public String createOrder(List<Item> items) {
+    public Order createOrder(List<Item> items) {
         User user = sessionCache.loadCurrentUser();
+
+        ShoppingCart shoppingCart = shoppingCartRepository.findShoppingCartByUser(user);
+
         double totalPrice = 0;
         for (Item item : items) {
             totalPrice += item.getPrice();
         }
+        items.clear();
+        shoppingCart.setItems(items);
+        shoppingCartRepository.save(shoppingCart);
+
         Order order = Order.builder().id(StringUtils.randomUUID()).totalPrice(totalPrice).address(user.getAddresses().get(0).getDescription()).items(items).build();
         orderRepository.save(order);
         user.getOrders().add(order);
         userRepository.save(user);
-        return null;
+
+        return order;
     }
 }
