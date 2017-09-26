@@ -7,4 +7,6 @@ import java.util.List;
 
 public interface OrderService {
     Order createOrder(List<Item> items);
+
+    List<Order> getOrders();
 }

@@ -1,6 +1,7 @@
 package com.thoughtworks.api;
 
 import com.thoughtworks.entity.Item;
+import com.thoughtworks.entity.Order;
 import com.thoughtworks.exception.IllegalArgumentException;
 import com.thoughtworks.service.OrderService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,5 +24,11 @@ public class OrderController {
             return "created order!";
         }
         throw new IllegalArgumentException("created order failed!");
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<Order> getOrders() {
+        return orderService.getOrders();
     }
 }

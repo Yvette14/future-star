@@ -51,4 +51,11 @@ public class OrderServiceImpl implements OrderService {
 
         return order;
     }
+
+    @Override
+    public List<Order> getOrders() {
+        User user = sessionCache.loadCurrentUser();
+
+        return userRepository.findUserByUsername(user.getUsername()).getOrders();
+    }
 }
