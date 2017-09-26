@@ -47,4 +47,10 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
         return "Added Item To ShoppingCart.";
     }
+
+    @Override
+    public ShoppingCart getShoppingCart() {
+        User user = sessionCache.loadCurrentUser();
+        return shoppingCartRepository.findShoppingCartByUser(user);
+    }
 }

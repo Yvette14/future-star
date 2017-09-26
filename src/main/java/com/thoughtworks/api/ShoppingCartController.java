@@ -1,6 +1,7 @@
 package com.thoughtworks.api;
 
 import com.thoughtworks.entity.Item;
+import com.thoughtworks.entity.ShoppingCart;
 import com.thoughtworks.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -17,5 +18,11 @@ public class ShoppingCartController {
     @ResponseStatus(HttpStatus.CREATED)
     public String addItem(@RequestBody Item item) {
         return shoppingCartService.addItem(item);
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public ShoppingCart getShoppingCart() {
+        return shoppingCartService.getShoppingCart();
     }
 }
