@@ -30,13 +30,13 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     public String addItem(String username, Item item) {
         ShoppingCart shoppingCart;
         User user = userRepository.findUserByUsername(username);
-        if (shoppingCartRepository.findShoppingCartByUserId(user) != null) {
-            shoppingCart = shoppingCartRepository.findShoppingCartByUserId(user);
+        if (shoppingCartRepository.findShoppingCartByUser(user) != null) {
+            shoppingCart = shoppingCartRepository.findShoppingCartByUser(user);
             shoppingCart.getItems().add(item);
         }else {
             List<Item> items = new ArrayList<>();
             items.add(item);
-            shoppingCart = ShoppingCart.builder().id(StringUtils.randomUUID()).userId(user).items(items).build();
+            shoppingCart = ShoppingCart.builder().id(StringUtils.randomUUID()).user(user).items(items).build();
         }
 
         shoppingCartRepository.save(shoppingCart);

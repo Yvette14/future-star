@@ -18,8 +18,8 @@ public class ShoppingCart {
     private String id;
 
     @OneToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId", referencedColumnName = "id")
-    private User userId;
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private User user;
 
     @ManyToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
     @JoinTable(name = "shopping_cart_items", joinColumns = @JoinColumn(name = "shopping_cart_id", referencedColumnName = "id"),
