@@ -2,12 +2,10 @@ package com.thoughtworks.api;
 
 import com.thoughtworks.entity.Item;
 import com.thoughtworks.service.ItemService;
+import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -17,6 +15,13 @@ public class ItemController {
 
     @Autowired
     ItemService itemService;
+
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public Item createItem(@RequestBody Item item) {
+        item.setId(StringUtils.randomUUID());
+        return itemService.createItem(item);
+    }
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)

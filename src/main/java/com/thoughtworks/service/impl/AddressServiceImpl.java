@@ -5,6 +5,7 @@ import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.AddressRepository;
 import com.thoughtworks.repository.UserRepository;
 import com.thoughtworks.service.AddressService;
+import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -21,7 +22,8 @@ public class AddressServiceImpl implements AddressService {
     public Address createAddress(String username, Address address) {
         User user = userRepository.findUserByUsername(username);
         address.setUserId(user);
+        address.setId(StringUtils.randomUUID());
         addressRepository.save(address);
-        return null;
+        return address;
     }
 }
