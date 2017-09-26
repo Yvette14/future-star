@@ -4,6 +4,7 @@ import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.UserRepository;
 import com.thoughtworks.service.UserService;
 import com.thoughtworks.util.StringUtils;
+import org.hibernate.collection.internal.PersistentBag;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

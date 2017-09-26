@@ -3,12 +3,15 @@ package com.thoughtworks.api;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.thoughtworks.entity.Address;
 import com.thoughtworks.entity.User;
+import com.thoughtworks.repository.AddressRepository;
 import com.thoughtworks.repository.UserRepository;
 import com.thoughtworks.util.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+
+import java.util.Collections;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -19,9 +22,13 @@ public class AddressControllerTest extends BaseControllerTest{
     @Autowired
     UserRepository userRepository;
 
+    @Autowired
+    AddressRepository addressRepository;
+
+
     @BeforeEach
     void setUp() {
-        User user = User.builder().id(StringUtils.randomUUID()).username("new_user").password("123456").age(22).build();
+        User user = User.builder().addresses(Collections.emptyList()).id(StringUtils.randomUUID()).username("new_user").password("123456").age(22).build();
         userRepository.save(user);
     }
 

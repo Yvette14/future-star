@@ -18,7 +18,4 @@ public class Address {
 
     private String description;
 
-    @ManyToOne(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
-    @JoinColumn(name = "userId",referencedColumnName = "id")
-    private User userId;
 }

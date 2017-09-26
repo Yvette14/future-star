@@ -3,12 +3,13 @@ package com.thoughtworks.entity;
 import lombok.*;
 
 import javax.persistence.*;
+import java.util.List;
 
 @Setter
 @Getter
 @Builder
-@NoArgsConstructor
 @AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "t_user")
 public class User {
@@ -19,4 +20,8 @@ public class User {
     private String username;
     private String password;
     private int age;
+
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @JoinColumn(name = "user_id", referencedColumnName = "id")
+    private List<Address> addresses;
 }
