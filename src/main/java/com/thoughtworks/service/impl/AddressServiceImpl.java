@@ -21,7 +21,6 @@ public class AddressServiceImpl implements AddressService {
     UserRepository userRepository;
 
     @Override
-    @Transactional
     public Address createAddress(String username, Address address) {
         User user = userRepository.findUserByUsername(username);
         address.setId(StringUtils.randomUUID());

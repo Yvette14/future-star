@@ -21,7 +21,7 @@ public class User {
     private String password;
     private int age;
 
-    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.LAZY)
+    @OneToMany(cascade = CascadeType.REFRESH, fetch = FetchType.EAGER)
     @JoinColumn(name = "user_id", referencedColumnName = "id")
     private List<Address> addresses;
 }

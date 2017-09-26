@@ -1,6 +1,7 @@
 package com.thoughtworks.api;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.thoughtworks.cache.SessionCache;
 import com.thoughtworks.dto.LoginBody;
 import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.UserRepository;
@@ -12,6 +13,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import static org.hamcrest.core.Is.is;
+import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -26,6 +29,9 @@ public class LoginControllerTest extends BaseControllerTest {
 
     @Autowired
     LoginService loginService;
+
+    @Autowired
+    SessionCache sessionCache;
 
     @BeforeEach
     void setUp() {
@@ -42,6 +48,8 @@ public class LoginControllerTest extends BaseControllerTest {
                 .content(new ObjectMapper().writeValueAsString(loginBody)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$").value("login successfully!"));
+
+        assertThat(sessionCache.loadCurrentUser().getUsername(),is(loginBody.getUsername()));
     }
 
     @Test
