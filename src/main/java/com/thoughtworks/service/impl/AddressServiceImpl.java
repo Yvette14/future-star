@@ -30,7 +30,9 @@ public class AddressServiceImpl implements AddressService {
         User user = sessionCache.loadCurrentUser();
         address.setId(StringUtils.randomUUID());
         addressRepository.save(address);
+
         user.getAddresses().add(address);
+        userRepository.save(user);
         return address;
     }
 }
