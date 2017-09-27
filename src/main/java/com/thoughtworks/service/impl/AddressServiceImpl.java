@@ -10,6 +10,8 @@ import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
+
 @Service
 public class AddressServiceImpl implements AddressService {
 
@@ -23,6 +25,7 @@ public class AddressServiceImpl implements AddressService {
     SessionCache sessionCache;
 
     @Override
+    @Transactional
     public Address createAddress(Address address) {
         User user = sessionCache.loadCurrentUser();
         address.setId(StringUtils.randomUUID());

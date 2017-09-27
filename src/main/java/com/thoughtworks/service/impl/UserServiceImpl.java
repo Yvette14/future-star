@@ -7,6 +7,7 @@ import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -16,7 +17,8 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-        public boolean createUser(User user) {
+    @Transactional
+    public boolean createUser(User user) {
         if (user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getAge() == 0) {
             return false;
         }
@@ -31,6 +33,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public boolean updateUserAge(String username, User user) {
         if (userRepository.findUserByUsername(username).getUsername().equals(user.getUsername())) {
             userRepository.save(user);

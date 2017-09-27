@@ -12,6 +12,7 @@ import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -31,6 +32,7 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
     ShoppingCartRepository shoppingCartRepository;
 
     @Override
+    @Transactional
     public String addItem(Item item) {
         ShoppingCart shoppingCart;
         User user = sessionCache.loadCurrentUser();

@@ -13,6 +13,7 @@ import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.List;
 
 @Service
@@ -31,6 +32,7 @@ public class OrderServiceImpl implements OrderService {
     SessionCache sessionCache;
 
     @Override
+    @Transactional
     public Order createOrder(List<Item> items) {
         User user = sessionCache.loadCurrentUser();
 
