@@ -8,6 +8,8 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.util.Arrays;
+
 import static org.hamcrest.Matchers.hasSize;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -24,14 +26,11 @@ public class ItemControllerTest extends BaseControllerTest {
         Item item2 = Item.builder().id(StringUtils.randomUUID()).itemName("water").price(2.0).build();
         Item item3 = Item.builder().id(StringUtils.randomUUID()).itemName("tissue").price(1.0).build();
 
-        itemRepository.save(item1);
-        itemRepository.save(item2);
-        itemRepository.save(item3);
+        itemRepository.save(Arrays.asList(item1, item2, item3));
     }
 
     @Test
     void should_return_all_items() throws Exception {
-
         mockMvc.perform(get("/api/items")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())

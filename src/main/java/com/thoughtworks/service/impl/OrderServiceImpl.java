@@ -40,12 +40,14 @@ public class OrderServiceImpl implements OrderService {
         for (Item item : items) {
             totalPrice += item.getPrice();
         }
+
+        Order order = Order.builder().id(StringUtils.randomUUID()).totalPrice(totalPrice).address(user.getAddresses().get(0).getDescription()).items(items).build();
+        orderRepository.save(order);
+
         items.clear();
         shoppingCart.setItems(items);
         shoppingCartRepository.save(shoppingCart);
 
-        Order order = Order.builder().id(StringUtils.randomUUID()).totalPrice(totalPrice).address(user.getAddresses().get(0).getDescription()).items(items).build();
-        orderRepository.save(order);
         user.getOrders().add(order);
         userRepository.save(user);
 
