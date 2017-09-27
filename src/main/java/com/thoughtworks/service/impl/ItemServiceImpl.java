@@ -3,6 +3,7 @@ package com.thoughtworks.service.impl;
 import com.thoughtworks.entity.Item;
 import com.thoughtworks.repository.ItemRepository;
 import com.thoughtworks.service.ItemService;
+import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -23,6 +24,7 @@ public class ItemServiceImpl implements ItemService {
     @Override
     @Transactional
     public Item createItem(Item item) {
+        item.setId(StringUtils.randomUUID());
         return itemRepository.save(item);
     }
 }

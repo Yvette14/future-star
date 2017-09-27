@@ -19,7 +19,6 @@ public class ItemController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public Item createItem(@RequestBody Item item) {
-        item.setId(StringUtils.randomUUID());
         return itemService.createItem(item);
     }
 
