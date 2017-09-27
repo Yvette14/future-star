@@ -46,3 +46,9 @@ dependencies {
     testCompile 'org.springframework.boot:spring-boot-starter-test'
 
 }
+
+flyway {
+    url='jdbc:mysql://127.0.0.1:3306/future_star'
+    user='root'
+    password='dev'
+}

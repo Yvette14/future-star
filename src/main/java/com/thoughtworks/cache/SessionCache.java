@@ -5,6 +5,8 @@ import com.thoughtworks.repository.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
+
 @Component
 public class SessionCache {
 
@@ -22,7 +24,9 @@ public class SessionCache {
             return currentUser;
         }
 
-        currentUser = userRepository.findAll().get(0);
+        List<User> users = userRepository.findAll();
+        currentUser = users.get(0);
+
         return currentUser;
     }
 }
