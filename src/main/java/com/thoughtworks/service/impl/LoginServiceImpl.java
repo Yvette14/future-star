@@ -19,8 +19,8 @@ public class LoginServiceImpl implements LoginService {
     @Override
     public boolean isValid(String username, String password) {
 
-        User user = userRepository.findUserByUsernameAndPassword(username, password);
-        if (user != null && user.getUsername().equals(username) && user.getPassword().equals(password)) {
+        User user = userRepository.findUserByUsername(username);
+        if (user != null && user.getPassword().equals(password)) {
             sessionCache.setCurrentUser(user);
             return true;
         } else {
