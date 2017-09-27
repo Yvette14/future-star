@@ -21,6 +21,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.hamcrest.collection.IsCollectionWithSize.hasSize;
 import static org.hamcrest.core.Is.is;
@@ -80,9 +81,11 @@ public class OrderControllerTest extends BaseControllerTest {
 
         List<Item> items = shoppingCartRepository.findShoppingCartByUser(user).getItems();
 
+        List<String> itemIds = items.stream().map(item -> item.getId()).collect(Collectors.toList());
+
         mockMvc.perform(post("/api/orders")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(items)))
+                .content(new ObjectMapper().writeValueAsString(itemIds)))
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$").value("created order!"));
 
@@ -110,8 +113,9 @@ public class OrderControllerTest extends BaseControllerTest {
         shoppingCartService.addItem(item3.getId());
 
         List<Item> items = shoppingCartRepository.findShoppingCartByUser(user).getItems();
+        List<String> itemIds = items.stream().map(item -> item.getId()).collect(Collectors.toList());
 
-        orderService.createOrder(items);
+        orderService.createOrder(itemIds);
 
         mockMvc.perform(get("/api/orders")
                 .contentType(MediaType.APPLICATION_JSON))

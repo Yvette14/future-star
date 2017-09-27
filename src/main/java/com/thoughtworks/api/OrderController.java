@@ -1,6 +1,5 @@
 package com.thoughtworks.api;
 
-import com.thoughtworks.entity.Item;
 import com.thoughtworks.entity.Order;
 import com.thoughtworks.exception.IllegalArgumentException;
 import com.thoughtworks.service.OrderService;
@@ -19,8 +18,8 @@ public class OrderController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String createOrder(@RequestBody List<Item> items) {
-        if (orderService.createOrder(items) != null) {
+    public String createOrder(@RequestBody List<String> itemIds) {
+        if (orderService.createOrder(itemIds) != null) {
             return "created order!";
         }
         throw new IllegalArgumentException("created order failed!");
