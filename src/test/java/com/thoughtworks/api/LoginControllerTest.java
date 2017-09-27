@@ -49,7 +49,7 @@ public class LoginControllerTest extends BaseControllerTest {
                 .andExpect(status().isCreated())
                 .andExpect(jsonPath("$").value("login successfully!"));
 
-        assertThat(sessionCache.loadCurrentUser().getUsername(),is(loginBody.getUsername()));
+        assertThat(sessionCache.loadCurrentUser().getUsername(), is(loginBody.getUsername()));
     }
 
     @Test

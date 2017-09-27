@@ -17,7 +17,7 @@ public class LoginController {
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
     public String login(@RequestBody User user) {
-        if (loginService.isValid(user.getUsername(),user.getPassword())) {
+        if (loginService.isValid(user.getUsername(), user.getPassword())) {
             return "login successfully!";
         }
         throw new InvalidCredentialException("login failed!");

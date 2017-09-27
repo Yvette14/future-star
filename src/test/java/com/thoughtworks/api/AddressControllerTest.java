@@ -5,7 +5,6 @@ import com.thoughtworks.entity.Address;
 import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.AddressRepository;
 import com.thoughtworks.repository.UserRepository;
-import com.thoughtworks.service.UserService;
 import com.thoughtworks.util.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -18,7 +17,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class AddressControllerTest extends BaseControllerTest{
+public class AddressControllerTest extends BaseControllerTest {
 
     @Autowired
     UserRepository userRepository;
