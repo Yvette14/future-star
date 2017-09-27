@@ -16,7 +16,7 @@ public class UserServiceImpl implements UserService {
     private UserRepository userRepository;
 
     @Override
-    public boolean createUser(User user) {
+        public boolean createUser(User user) {
         if (user.getUsername().isEmpty() || user.getPassword().isEmpty() || user.getAge() == 0) {
             return false;
         }

@@ -30,9 +30,7 @@ public class UserControllerTest extends BaseControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(new ObjectMapper().writeValueAsString(user)))
                 .andExpect(status().isCreated())
-                .andExpect(jsonPath("$.username").value("future_star"))
-                .andExpect(jsonPath("$.password").value("123456"))
-                .andExpect(jsonPath("$.age").value(22));
+                .andExpect(jsonPath("$").value("future_star"));
     }
 
     @Test

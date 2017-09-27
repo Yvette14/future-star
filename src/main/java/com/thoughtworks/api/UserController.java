@@ -18,9 +18,9 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public User createUser(@RequestBody User user) {
+    public String createUser(@RequestBody User user) {
         if (userService.createUser(user)) {
-            return user;
+            return user.getUsername();
         }
         throw new IllegalArgumentException("create user failed!");
     }
