@@ -13,6 +13,9 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
+import java.util.Arrays;
+import java.util.List;
+
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -45,7 +48,7 @@ public class ShoppingCartControllerTest extends BaseControllerTest {
 
         mockMvc.perform(post("/api/shopping-carts")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(new ObjectMapper().writeValueAsString(item)))
+                .content(new ObjectMapper().writeValueAsString(item.getId())))
                 .andExpect(status().isCreated());
     }
 
@@ -55,17 +58,14 @@ public class ShoppingCartControllerTest extends BaseControllerTest {
         Item item2 = Item.builder().id(StringUtils.randomUUID()).itemName("water").price(2.0).build();
         Item item3 = Item.builder().id(StringUtils.randomUUID()).itemName("tissue").price(1.0).build();
 
-        itemRepository.save(item1);
-        itemRepository.save(item2);
-        itemRepository.save(item3);
+        itemRepository.save(Arrays.asList(item1,item2,item3));
 
-        shoppingCartService.addItem(item1);
-        shoppingCartService.addItem(item2);
-        shoppingCartService.addItem(item3);
+        shoppingCartService.addItem(item1.getId());
+        shoppingCartService.addItem(item2.getId());
+        shoppingCartService.addItem(item3.getId());
 
         mockMvc.perform(get("/api/shopping-carts")
                 .contentType(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk());
-//                .andExpect(jsonPath("$.shopping_cart_item", hasSize(3)));
     }
 }

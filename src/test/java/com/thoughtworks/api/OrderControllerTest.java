@@ -18,6 +18,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 
@@ -71,13 +72,11 @@ public class OrderControllerTest extends BaseControllerTest {
         Item item2 = Item.builder().id(StringUtils.randomUUID()).itemName("water").price(2.0).build();
         Item item3 = Item.builder().id(StringUtils.randomUUID()).itemName("tissue").price(1.0).build();
 
-        itemRepository.save(item1);
-        itemRepository.save(item2);
-        itemRepository.save(item3);
+        itemRepository.save(Arrays.asList(item1,item2,item3));
 
-        shoppingCartService.addItem(item1);
-        shoppingCartService.addItem(item2);
-        shoppingCartService.addItem(item3);
+        shoppingCartService.addItem(item1.getId());
+        shoppingCartService.addItem(item2.getId());
+        shoppingCartService.addItem(item3.getId());
 
         List<Item> items = shoppingCartRepository.findShoppingCartByUser(user).getItems();
 
@@ -104,13 +103,11 @@ public class OrderControllerTest extends BaseControllerTest {
         Item item2 = Item.builder().id(StringUtils.randomUUID()).itemName("water").price(2.0).build();
         Item item3 = Item.builder().id(StringUtils.randomUUID()).itemName("tissue").price(1.0).build();
 
-        itemRepository.save(item1);
-        itemRepository.save(item2);
-        itemRepository.save(item3);
+        itemRepository.save(Arrays.asList(item1,item2,item3));
 
-        shoppingCartService.addItem(item1);
-        shoppingCartService.addItem(item2);
-        shoppingCartService.addItem(item3);
+        shoppingCartService.addItem(item1.getId());
+        shoppingCartService.addItem(item2.getId());
+        shoppingCartService.addItem(item3.getId());
 
         List<Item> items = shoppingCartRepository.findShoppingCartByUser(user).getItems();
 

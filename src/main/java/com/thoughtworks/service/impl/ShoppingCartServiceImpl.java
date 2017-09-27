@@ -33,9 +33,11 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
 
     @Override
     @Transactional
-    public String addItem(Item item) {
-        ShoppingCart shoppingCart;
+    public void addItem(String itemId) {
         User user = sessionCache.loadCurrentUser();
+        Item item = itemRepository.findOne(itemId);
+
+        ShoppingCart shoppingCart;
         if (shoppingCartRepository.findShoppingCartByUser(user) != null) {
             shoppingCart = shoppingCartRepository.findShoppingCartByUser(user);
             shoppingCart.getItems().add(item);
@@ -46,8 +48,6 @@ public class ShoppingCartServiceImpl implements ShoppingCartService {
         }
 
         shoppingCartRepository.save(shoppingCart);
-
-        return "Added Item To ShoppingCart.";
     }
 
     @Override

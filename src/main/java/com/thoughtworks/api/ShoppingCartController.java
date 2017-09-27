@@ -16,8 +16,8 @@ public class ShoppingCartController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public String addItem(@RequestBody Item item) {
-        return shoppingCartService.addItem(item);
+    public void addItem(@RequestBody String itemId) {
+        shoppingCartService.addItem(itemId);
     }
 
     @GetMapping
