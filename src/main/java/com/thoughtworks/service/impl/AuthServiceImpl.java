@@ -2,6 +2,7 @@ package com.thoughtworks.service.impl;
 
 import com.thoughtworks.dto.LoginBody;
 import com.thoughtworks.entity.JWTUser;
+import com.thoughtworks.exception.IllegalArgumentException;
 import com.thoughtworks.exception.InvalidCredentialException;
 import com.thoughtworks.repository.TokenAuthRepository;
 import com.thoughtworks.service.AuthService;
@@ -9,6 +10,7 @@ import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -37,19 +39,21 @@ public class AuthServiceImpl implements AuthService {
     @Autowired
     private AuthenticationManager authenticationManager;
 
-    @Autowired
-    private PasswordEncoder passwordEncoder;
-
     @Override
     public JWTUser login(HttpServletResponse response, LoginBody loginRequestUser) {
-        Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestUser.getUsername(), loginRequestUser.getPassword()));
-        JWTUser principal = (JWTUser) authenticate.getPrincipal();
+        try {
+            Authentication authenticate = authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(loginRequestUser.getUsername(), loginRequestUser.getPassword()));
+            JWTUser principal = (JWTUser) authenticate.getPrincipal();
 
-        Map payload = StringUtils.readJsonStringAsObject(StringUtils.writeObjectAsJsonString(principal), Map.class);
+            Map payload = StringUtils.readJsonStringAsObject(StringUtils.writeObjectAsJsonString(principal), Map.class);
 
-        response.addHeader(header, String.join(" ", tokenPrefix,
-                authRepository.generateToken(payload)));
-        return principal;
+            response.addHeader(header, String.join(" ", tokenPrefix,
+                    authRepository.generateToken(payload)));
+            return principal;
+        } catch (BadCredentialsException e) {
+            throw new IllegalArgumentException("Password is invalid!");
+        }
+
     }
 
     @Override

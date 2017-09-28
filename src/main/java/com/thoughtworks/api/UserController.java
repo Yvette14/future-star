@@ -34,7 +34,6 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
-    @Secured("ROLE_UPDATE_USER")
     public User updateUserAge(@PathVariable String username, @RequestBody User user) {
         if (userService.updateUserAge(username, user)) {
             return user;

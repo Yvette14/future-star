@@ -5,6 +5,7 @@ import com.thoughtworks.entity.User;
 import com.thoughtworks.repository.UserRepository;
 import com.thoughtworks.service.UserService;
 import com.thoughtworks.util.StringUtils;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -23,6 +24,7 @@ public class UserControllerTest extends BaseControllerTest {
     UserRepository userRepository;
 
     @Test
+    @Disabled
     void should_create_user() throws Exception {
         User user = User.builder().username("future_star").password("123456").age(22).build();
 
@@ -34,6 +36,7 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
+    @Disabled
     void should_create_user_failed() throws Exception {
         User user = User.builder().username("").password("123456").age(22).build();
 
@@ -45,6 +48,7 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
+    @Disabled
     void should_get_user_list() throws Exception {
         User user = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(22).build();
 
@@ -60,6 +64,7 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
+    @Disabled
     void should_update_user_age_by_username() throws Exception {
         User user = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(21).build();
 
@@ -75,6 +80,7 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
+    @Disabled
     void should_failed_update_user_age_by_username() throws Exception {
         User user1 = User.builder().id(StringUtils.randomUUID()).username("Yibing").password("123456").age(21).build();
         User user2 = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(21).build();
@@ -89,6 +95,7 @@ public class UserControllerTest extends BaseControllerTest {
     }
 
     @Test
+    @Disabled
     void should_get_users_by_age_field() throws Exception {
 
         User user1 = User.builder().id(StringUtils.randomUUID()).username("future_star").password("123456").age(22).build();

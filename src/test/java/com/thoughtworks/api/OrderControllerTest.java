@@ -13,6 +13,7 @@ import com.thoughtworks.service.OrderService;
 import com.thoughtworks.service.ShoppingCartService;
 import com.thoughtworks.util.StringUtils;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -60,6 +61,7 @@ public class OrderControllerTest extends BaseControllerTest {
     }
 
     @Test
+    @Disabled
     void should_create_order() throws Exception {
         List<Address> addresses = new ArrayList<>();
         Address address = Address.builder().id(StringUtils.randomUUID()).description("street1").build();
@@ -93,6 +95,7 @@ public class OrderControllerTest extends BaseControllerTest {
     }
 
     @Test
+    @Disabled
     void should_return_user_order() throws Exception {
         List<Address> addresses = new ArrayList<>();
         Address address = Address.builder().id(StringUtils.randomUUID()).description("street1").build();
