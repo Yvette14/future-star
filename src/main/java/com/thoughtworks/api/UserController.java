@@ -5,6 +5,7 @@ import com.thoughtworks.exception.IllegalArgumentException;
 import com.thoughtworks.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.annotation.Secured;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -18,6 +19,7 @@ public class UserController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
+    @Secured("ROLE_CREATE_USER")
     public String createUser(@RequestBody User user) {
         if (userService.createUser(user)) {
             return user.getUsername();
@@ -32,6 +34,7 @@ public class UserController {
     }
 
     @PutMapping("/{username}")
+    @Secured("ROLE_UPDATE_USER")
     public User updateUserAge(@PathVariable String username, @RequestBody User user) {
         if (userService.updateUserAge(username, user)) {
             return user;

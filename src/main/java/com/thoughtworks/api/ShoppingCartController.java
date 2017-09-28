@@ -1,6 +1,5 @@
 package com.thoughtworks.api;
 
-import com.thoughtworks.entity.Item;
 import com.thoughtworks.entity.ShoppingCart;
 import com.thoughtworks.service.ShoppingCartService;
 import org.springframework.beans.factory.annotation.Autowired;

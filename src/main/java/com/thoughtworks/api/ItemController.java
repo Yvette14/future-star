@@ -2,7 +2,6 @@ package com.thoughtworks.api;
 
 import com.thoughtworks.entity.Item;
 import com.thoughtworks.service.ItemService;
-import com.thoughtworks.util.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
